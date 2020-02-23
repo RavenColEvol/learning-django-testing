@@ -1,7 +1,18 @@
 from selenium import webdriver
+import unittest
 
-browser = webdriver.Firefox()
-browser.get('http://localhost:8000/')
 
-# check if Django
-assert 'Django' in browser.title
+class NewVisitorTest(unittest.TestCase):
+    def setUp(self):
+        self.browser = webdriver.Firefox()
+
+    def tearDown(self):
+        self.browser.quit()
+
+    def test_can_start_a_list_and_retrieve_it_later(self):
+        self.browser.get('http://localhost:8000/')
+        self.assertIn(self.browser.title, 'To-Do')
+
+
+if __name__ == '__main__':
+    unittest.main(warnings='ignore')
